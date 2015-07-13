@@ -1,6 +1,7 @@
 " Prettyprint vim variables.
-" Version: 0.3.2
+" Version: 0.3.2.1
 " Author : thinca <thinca+vim@gmail.com>
+" Changes: Manpreet Singh <junkblocker@yahoo.com>
 " License: zlib License
 
 let s:save_cpo = &cpo

@@ -1,7 +1,8 @@
 *prettyprint.txt*	Prettyprint vim variables.
 
-Version: 0.3.2
+Version: 0.3.2.1
 Author : thinca <thinca+vim@gmail.com>
+Changes: Manpreet Singh <junkblocker@yahoo.com>
 License: zlib License
 
 ==============================================================================
@@ -43,9 +44,6 @@ COMMANDS					*prettyprint-commands*
 			each value by the comma.  If [!] is given, the output
 			is saved to the |message-history| by using |:echomsg|.
 
-:PP[!] {expr} [, ...]				*:PP*
-			This is a short version of |:PrettyPrint|.
-
 ------------------------------------------------------------------------------
 FUNCTIONS					*prettyprint-functions*
 
@@ -53,9 +51,6 @@ PrettyPrint({expr} [, ...])			*PrettyPrint()*
 			Return {expr} converted to a formatted String.  When
 			two or more values are passed, it is delimited by
 			"\n".
-
-PP({expr} [, ...])				*PP()*
-			This is a short version of |PrettyPrint()|.
 
 
 
@@ -83,7 +78,7 @@ b:prettyprint_string				*b:prettyprint_string*
 g:prettyprint_show_expression	*g:prettyprint_show_expression*
 	Show also expression not only evaluated value.
 	e.g.: If this variable is true,
-	":PP 1 + 1" outputs "1 + 1 = 2".
+	":PrettyPrint 1 + 1" outputs "1 + 1 = 2".
 	If false, it just outputs "2".
 
 
@@ -124,7 +119,7 @@ List					*prettyprint-format-rules-List*
 >
 	let x = [10]
 	let x += [x]
-	PP x  " => [10, [nested element 0]]
+	PrettyPrint x  " => [10, [nested element 0]]
 <
 Dictionary				*prettyprint-format-rules-Dictionary*
 	Dictionary is displayed by same style as |string()|.  If the limit of
@@ -157,25 +152,29 @@ LIMITATION					*prettyprint-limitation*
   of it. See 'maxfuncdepth'.
 
 - Can't access a script local variable/function via the command.
-  - This is specification of Vim.  Use |PP()| instead.
+  - This is specification of Vim.  Use |PrettyPrint()| instead.
 >
 	let s:var = 0
 	function s:dump(var)
 	  let l:var = 0
 	  " OK
-	  PP a:var
+	  PrettyPrint a:var
 	  " OK
-	  PP l:var
+	  PrettyPrint l:var
 	  " NG
-	  PP s:var
+	  PrettyPrint s:var
 	  " OK
-	  echo PP(s:var)
+	  echo PrettyPrint(s:var)
 	endfunction
 
 
 
 ==============================================================================
 CHANGELOG					*prettyprint-changelog*
+
+0.3.2.1	2015-07-13
+	- Removed support for too common "PP" names as they conflict with
+	  other plugins.
 
 0.3.2	2011-12-22
 	- Added |g:prettyprint_string| option.

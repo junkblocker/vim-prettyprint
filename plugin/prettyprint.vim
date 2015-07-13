@@ -1,6 +1,7 @@
 " Prettyprint vim variables.
-" Version: 0.3.2
+" Version: 0.3.2.1
 " Author : thinca <thinca+vim@gmail.com>
+" Changes: Manpreet Singh <junkblocker@yahoo.com>
 " License: zlib License
 
 if exists('g:loaded_prettyprint')
@@ -15,13 +16,8 @@ function! PrettyPrint(...)
   return call('prettyprint#prettyprint', a:000)
 endfunction
 
-function! PP(...)
-  return call('prettyprint#prettyprint', a:000)
-endfunction
-
 " commands. {{{1
-command! -nargs=+ -bang -complete=expression PrettyPrint PP<bang> <args>
-command! -nargs=+ -bang -complete=expression PP call prettyprint#echo(PP(<args>), <bang>0, <q-args>)
-
+command! -nargs=+ -bang -complete=expression PrettyPrint call prettyprint#echo(PP(<args>), <bang>0, <q-args>)
+" }}}
 let &cpo = s:save_cpo
 unlet s:save_cpo

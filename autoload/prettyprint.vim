@@ -1,15 +1,16 @@
 " Prettyprint vim variables.
-" Version: 0.3.2.1
+" Version: 0.3.3.1
 " Author : thinca <thinca+vim@gmail.com>
 " Changes: Manpreet Singh <junkblocker@yahoo.com>
 " License: zlib License
 
-let s:save_cpo = &cpo
-set cpo&vim
-
 " options. {{{1
 if !exists('g:prettyprint_indent')  " {{{2
-  let g:prettyprint_indent = '&l:shiftwidth'
+  if exists('*shiftwidth')
+    let g:prettyprint_indent = 'shiftwidth()'
+  else
+    let g:prettyprint_indent = '&l:shiftwidth'
+  endif
 endif
 
 if !exists('g:prettyprint_width')  " {{{2
@@ -25,7 +26,7 @@ if !exists('g:prettyprint_show_expression')  " {{{2
 endif
 
 " functions. {{{1
-function! s:pp(expr, shift, width, stack)
+function! s:pp(expr, shift, width, stack) abort
   let indent = repeat(s:blank, a:shift)
   let indentn = indent . s:blank
 
@@ -114,13 +115,13 @@ function! s:pp(expr, shift, width, stack)
   return str
 endfunction
 
-function! s:option(name)
+function! s:option(name) abort
   let name = 'prettyprint_' . a:name
   let opt = has_key(b:, name) ? b:[name] : g:[name]
   return type(opt) == type('') ? eval(opt) : opt
 endfunction
 
-function! prettyprint#echo(str, msg, expr)
+function! prettyprint#echo(str, msg, expr) abort
   let str = a:str
   if g:prettyprint_show_expression
     let str = a:expr . ' = ' . str
@@ -134,7 +135,7 @@ function! prettyprint#echo(str, msg, expr)
   endif
 endfunction
 
-function! prettyprint#prettyprint(...)
+function! prettyprint#prettyprint(...) abort
   let s:indent = s:option('indent')
   let s:blank = repeat(' ', s:indent)
   let s:width = s:option('width') - 1
@@ -149,6 +150,3 @@ function! prettyprint#prettyprint(...)
   endfor
   return join(result, "\n")
 endfunction
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
